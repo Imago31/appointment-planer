@@ -14,6 +14,13 @@ const terminData= [
   const [termin] = useState(terminData);
   const [filter, setFilter] = useState(terminData);
   const [inputValue, setInputValue] = useState("");
+  const [form, setForm] = useState({
+    appointment: '',
+    name: '',
+    date: '',
+    time: ''
+  });
+  const [modal, setModal] = useState(false);
 
     const filterTermin = (e) =>{
       setInputValue(e.target.value)
@@ -25,9 +32,20 @@ const terminData= [
       }
     }
 
+    const formInputChange= (e) =>{
+      const { name, value } = e.target;
+      console.log(e.target.value)
+      setForm({
+        ...form,
+        [name]: value,
+      });
+      console.log(form.appointment)
+    }
+
 
   return (
     <div className="main">
+      <button onClick={() =>{setModal(true)}} className="openModal">Add appointment</button>
       <div className="inputBlock">
         <input placeholder='filter by name...' value={inputValue} onChange={filterTermin} className="userInput" type="text" />
         {/* <button className='userButton'>Sort by date</button> */}
@@ -55,7 +73,22 @@ const terminData= [
       :
       <div className='cardBlock nocard'><p className='error'>You have no any appointment, if you want add one click the button below</p><button className="add_termin">Add appointment</button></div>
       }
+
+      {modal && 
+      <div className="modal w3-animate-opacity"> 
+        <button onClick={() =>{setModal(false)}} className="closeModal">&#10005;</button>
+        <form  className="form">
+          <input onChange={formInputChange} value={form.appointment} name="appointment" className="inputForm" type="text" placeholder="Appointment name"/>
+          <input name="name" className="inputForm" type="text" placeholder="User name"/>
+          <input name="date" className="inputForm" type="date" placeholder="Date"/>
+          <input name="time" className="inputForm" type="time" placeholder="Time"/>
+          <button className="buttonForm" type="submit">Add appointment</button>
+        </form>
+      </div>
+      }
+
     </div>
+      
     
   )
 }
