@@ -1,12 +1,35 @@
+.inputBlock{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100px;
+  z-index: 1000;
+}
+
+.userInput{
+  max-width: 400px;
+  height: 40px;
+  border: 2px solid green;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 18px;
+  outline: none;
+  margin-top: 50px;
+}
 
 .cardBlock{
   width: 80%;
   margin: auto;
   margin-top: 120px;
+  margin-bottom: 50px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  /* border: 1px solid black; */
   gap: 20px;
 }
 
@@ -15,8 +38,6 @@
 }
 
 .card{
-  /* border: 2px solid rgb(8, 78, 8);
-  box-shadow: 1px 10px 10px rgb(8, 78, 8); */
   border: 2px solid green;
   box-shadow: 1px 10px 10px green;
   border-radius: 4px;
@@ -24,12 +45,10 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  /* font-size: 20px; */
 }
 
 .removeTermin{
   width: 100%;
-  /* background: orange; */
   color: green;
   height: 30px;
   border-radius: 4px;
@@ -56,26 +75,11 @@
 }
 
 .name{
-  /* font-size: 18px; */
   font-weight: bold;
   color: white;
   background: green;
   padding: 5px;
   text-align: center;
-}
-
-.inputBlock{
-  width: 100%;
-  margin: auto;
-  /* margin-top: 70px; */
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  /* border: 2px solid green; */
-  position: fixed;
-  top: 50px;
-  left: 0;
 }
 
 .openModal{
@@ -87,6 +91,9 @@
   border-radius: 0 0 4px 0;
   color: #ffffff;
   transition: .2s;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .openModal:hover{
@@ -94,41 +101,7 @@
   opacity: 0.9;
 }
 
-.userInput{
-  max-width: 400px;
-  height: 40px;
-  border: 2px solid green;
-  border-radius: 4px;
-  padding: 5px;
-  font-size: 18px;
-  outline: none;
-}
-
-.userButton{
-  height: 40px;
-  /* background: green;
-  border: none; */
-  border-radius: 4px;
-  padding: 10px;
-  font-size: 18px;
-  /* color: white; */
-  outline: none;
-  transition: .2s;
-
-  border: 2px solid green;
-  color: green;
-  background: none;
-}
-
-.userButton:hover{
-  cursor: pointer;
-  /* opacity: 0.7; */
-  cursor: pointer;
-  background: green;
-  color: #ffffff;
-}
-
-.add_termin{
+.addTermin{
   border: 2px solid green;
   border-radius: 4px;
   padding: 10px;
@@ -136,7 +109,7 @@
   transition: .3s;
 }
 
-.add_termin:hover{
+.addTermin:hover{
   cursor: pointer;
   background: green;
   color: #ffffff;
@@ -153,6 +126,13 @@
   color: red;
 }
 
+.notFound{
+  color: #ffffff;
+  background: red;
+  padding: 5px;
+  border-radius: 4px
+}
+
 .modal{
   position: fixed;
   top: 0;
@@ -165,6 +145,7 @@
   align-items: center;
   padding: 10px;
   background: green;
+  z-index: 2000;
 }
 
 .form{
