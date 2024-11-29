@@ -1,31 +1,38 @@
-import { useState } from 'react'
+import  { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
 
-const terminData= [
-  {termin: "Зубной врач", date: "7.12.2024", time: "14:00", name: "Рубен"},
-  {termin: "Джоб центр-интеграция в работу", date: "10.12.2024", time: "9:30", name: "Люда"},
-  {termin: "Плановый осмотр ребенка", date: "14.12.2024", time: "14:00", name: "Марк"},
-  {termin: "Дедсад-разговор с родителями", date: "18.12.2024", time: "13:00", name: "Аделя"},
-  {termin: "Встреча с коучинг бератором", date: "22.12.2024", time: "15:30", name: "Рубен"},
-]
-
-  const [termin] = useState(terminData);
-  const [filter, setFilter] = useState(terminData);
-  const [inputValue, setInputValue] = useState("");
+  const [value, setValue] = useState("");
+  const [termin, setTermin] = useState([]);
+  const [filter, setFilter] = useState([]);
+  const [modal, setModal] = useState(false);
   const [form, setForm] = useState({
     appointment: '',
     name: '',
     date: '',
     time: ''
   });
-  const [modal, setModal] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem('taskData')) {
+      setTermin(JSON.parse(localStorage.getItem('taskData')));
+      setFilter(termin);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('taskData', JSON.stringify(termin));
+    setFilter(termin);
+  }, [termin]);
+  
 
     const filterTermin = (e) =>{
-      setInputValue(e.target.value)
+      setValue(e.target.value);
+      console.log(e.target.value);
+      console.log(value);
       setFilter(termin.filter((item) =>{
-        return item.name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1 
+        return item.name.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1 
       }))
       if(e.target.value == ""){
         setFilter(termin)
@@ -34,21 +41,37 @@ const terminData= [
 
     const formInputChange= (e) =>{
       const { name, value } = e.target;
-      console.log(e.target.value)
+      console.log(e.target)
       setForm({
         ...form,
+        id: Date.now(),
         [name]: value,
       });
-      console.log(form.appointment)
     }
 
+    const formSubmit =(e) =>{
+      e.preventDefault();
+      console.log(form);
+      setTermin([...termin, form]);
+      setModal(false)
+    }
+
+    function removeTermin(id){
+      setTermin(termin.filter(function(items){
+          return items.id !== id; 
+      }))
+  }
+
+  const reverseDate = (date) => {
+    const [year, month, day] = date.split('-');
+    return `${day}-${month}-${year}`; 
+  };
 
   return (
     <div className="main">
-      <button onClick={() =>{setModal(true)}} className="openModal">Add appointment</button>
       <div className="inputBlock">
-        <input placeholder='filter by name...' value={inputValue} onChange={filterTermin} className="userInput" type="text" />
-        {/* <button className='userButton'>Sort by date</button> */}
+      <button onClick={() =>{setModal(true)}} className="openModal">Add appointment</button>
+        <input onChange={filterTermin} value={value} type="text" placeholder='filter by name...' className="userInput"/>
       </div>
       {termin.length != 0 ?
       <div className="cardBlock">
@@ -58,30 +81,30 @@ const terminData= [
               <div className="cardBox" key={item.id} >
                 <div className="card">
                   <p className="name">{item.name}</p>
-                  <p className="termin">{item.termin}</p>
-                  <p className="date">{item.date}</p>
+                  <p className="termin">{item.appointment}</p>
+                  <p className="date">{reverseDate(item.date)}</p>
                   <p className="time">{item.time}</p>
                 </div>
-                <button className="removeTermin">Remove termin</button>
+                <button onClick={() => removeTermin(item.id)} className="removeTermin">Remove termin</button>
               </div>
             )  
 
           })
         }
-        {filter.length == 0 && <h2>Appointment not found</h2>}
+        {filter.length == 0 && <h2 className="notFound">Appointment not found</h2>}
       </div>
       :
-      <div className='cardBlock nocard'><p className='error'>You have no any appointment, if you want add one click the button below</p><button className="add_termin">Add appointment</button></div>
+      <div className='cardBlock nocard'><p className='error'>You have no any appointment, if you want add one click the button below</p><button onClick={() =>{setModal(true)}} className="addTermin">Add appointment</button></div>
       }
 
       {modal && 
       <div className="modal w3-animate-opacity"> 
         <button onClick={() =>{setModal(false)}} className="closeModal">&#10005;</button>
-        <form  className="form">
+        <form onSubmit={formSubmit} className="form">
+          <input onChange={formInputChange} value={form.name} name="name" className="inputForm" type="text" placeholder="User name"/>
           <input onChange={formInputChange} value={form.appointment} name="appointment" className="inputForm" type="text" placeholder="Appointment name"/>
-          <input name="name" className="inputForm" type="text" placeholder="User name"/>
-          <input name="date" className="inputForm" type="date" placeholder="Date"/>
-          <input name="time" className="inputForm" type="time" placeholder="Time"/>
+          <input onChange={formInputChange} value={form.date} name="date" className="inputForm" type="date" placeholder="Date"/>
+          <input onChange={formInputChange} value={form.time} name="time" className="inputForm" type="time" placeholder="Time"/>
           <button className="buttonForm" type="submit">Add appointment</button>
         </form>
       </div>
@@ -89,7 +112,6 @@ const terminData= [
 
     </div>
       
-    
   )
 }
 
