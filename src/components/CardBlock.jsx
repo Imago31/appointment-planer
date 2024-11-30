@@ -9,11 +9,11 @@ function CardBlock({termin,filter,reverseDate,removeTermin,setModal}){
                         <div className="cardBox" key={item.id} >
                         <div className="card">
                             <p className="name">{item.name}</p>
-                            <p className="termin">{item.appointment}</p>
+                            <p className="appointment">{item.appointment}</p>
                             <p className="date">{reverseDate(item.date)}</p>
                             <p className="time">{item.time}</p>
                         </div>
-                        <button onClick={() => removeTermin(item.id)} className="removeTermin">Remove termin</button>
+                        <button onClick={() => removeTermin(item.id)} className="removeTermin">Remove appointment</button>
                         </div>
                     )  
         
