@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/appointment-planer/static/css/main.8b521e90.css",
-    "main.js": "/appointment-planer/static/js/main.66cb9089.js",
+    "main.js": "/appointment-planer/static/js/main.952cc52e.js",
     "index.html": "/appointment-planer/index.html",
     "main.8b521e90.css.map": "/appointment-planer/static/css/main.8b521e90.css.map",
-    "main.66cb9089.js.map": "/appointment-planer/static/js/main.66cb9089.js.map"
+    "main.952cc52e.js.map": "/appointment-planer/static/js/main.952cc52e.js.map"
   },
   "entrypoints": [
     "static/css/main.8b521e90.css",
-    "static/js/main.66cb9089.js"
+    "static/js/main.952cc52e.js"
   ]
 }
