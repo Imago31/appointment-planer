@@ -33,7 +33,7 @@ function App() {
       setFilter(termin.filter((item) =>{
         return item.name.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1 
       }))
-      if(e.target.value == ""){
+      if(e.target.value === ""){
         setFilter(termin)
       }
     }
@@ -44,6 +44,15 @@ function App() {
         ...form,
         id: Date.now(),
         [name]: value,
+      });
+    }
+
+    const timeInputChange= ([selectedTime]) =>{
+      const getTime = selectedTime.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hourCycle: "h23", });
+      setForm({
+        ...form,
+        id: Date.now(),
+        time: getTime,
       });
     }
 
@@ -68,7 +77,7 @@ function App() {
     <div className="main">
       <InputBlock setModal={setModal} filterTermin={filterTermin} />
       <CardBlock termin={termin} filter={filter} reverseDate={reverseDate} removeTermin={removeTermin} setModal={setModal} />
-      <ModalFormBlock modal={modal} setModal={setModal} formSubmit={formSubmit} formInputChange={formInputChange} form={form} />
+      <ModalFormBlock modal={modal} setModal={setModal} formSubmit={formSubmit} formInputChange={formInputChange} form={form} timeInputChange={timeInputChange}/>
     </div>
   )
 }

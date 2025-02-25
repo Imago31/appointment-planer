@@ -1,4 +1,7 @@
-function ModalFormBlock({modal,setModal,formSubmit,formInputChange,form}){
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
+
+function ModalFormBlock({modal,setModal,formSubmit,formInputChange,form,timeInputChange}){
     return(
         <>
             {modal && 
@@ -8,7 +11,19 @@ function ModalFormBlock({modal,setModal,formSubmit,formInputChange,form}){
                     <input onChange={formInputChange} value={form.name} name="name" className="inputForm" type="text" placeholder="User name"/>
                     <input onChange={formInputChange} value={form.appointment} name="appointment" className="inputForm" type="text" placeholder="Appointment name"/>
                     <input onChange={formInputChange} value={form.date} name="date" className="inputForm" type="date" placeholder="Date"/>
-                    <input onChange={formInputChange} value={form.time} name="time" className="inputForm" type="time" placeholder="Time"/>
+                    <Flatpickr
+                            name="time"
+                            value={form.time}
+                            onChange={timeInputChange}
+                            placeholder={"--:--"}
+                            options={{
+                                enableTime: true,
+                                noCalendar: true,
+                                dateFormat: "H:i",
+                                time_24hr: true,
+                            }}
+                            className="inputForm"
+                    />
                     <button className="buttonForm" type="submit">Add appointment</button>
                     </form>
                 </div>
