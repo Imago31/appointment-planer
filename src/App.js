@@ -10,11 +10,30 @@ function App() {
   const [filter, setFilter] = useState([]);
   const [modal, setModal] = useState(false);
   const [form, setForm] = useState({
-    appointment: '',
     name: '',
+    appointment: '',
     date: '',
     time: ''
   });
+  const [valid, setValid] = useState({});
+
+  const validate = () => {
+    const errors = {};
+    if (!form.name) {
+      errors.name = 'Required';
+    } 
+    if (!form.appointment) {
+      errors.appointment = 'Required';
+    }
+    if (!form.date) {
+      errors.date = 'Required';
+    } 
+    if (!form.time) {
+      errors.time = 'Required';
+    } 
+    setValid(errors)
+    return errors;
+  };
 
   useEffect(() => {
     if (localStorage.getItem('taskData')) {
@@ -38,7 +57,7 @@ function App() {
       }
     }
 
-    const formInputChange= (e) =>{
+    const formInputChange = (e) =>{
       const { name, value } = e.target;
       setForm({
         ...form,
@@ -56,10 +75,14 @@ function App() {
       });
     }
 
-    const formSubmit =(e) =>{
+    const formSubmit = (e) =>{
       e.preventDefault();
-      setTermin([...termin, form]);
-      setModal(false)
+      const err = validate();
+      if(Object.keys(err).length === 0){
+        setTermin([...termin, form]);
+        setModal(false);
+        setForm({name: '',appointment: '',date: '',time: ''})
+      }
     }
 
     function removeTermin(id){
@@ -77,7 +100,15 @@ function App() {
     <div className="main">
       <InputBlock setModal={setModal} filterTermin={filterTermin} />
       <CardBlock termin={termin} filter={filter} reverseDate={reverseDate} removeTermin={removeTermin} setModal={setModal} />
-      <ModalFormBlock modal={modal} setModal={setModal} formSubmit={formSubmit} formInputChange={formInputChange} form={form} timeInputChange={timeInputChange}/>
+      <ModalFormBlock modal={modal} 
+        setModal={setModal} 
+        formSubmit={formSubmit} 
+        formInputChange={formInputChange} 
+        form={form} 
+        timeInputChange={timeInputChange} 
+        validate={validate} 
+        valid={valid}
+        />
     </div>
   )
 }
