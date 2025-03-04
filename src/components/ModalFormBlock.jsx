@@ -1,7 +1,7 @@
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
-function ModalFormBlock({modal,setModal,formSubmit,formInputChange,form,timeInputChange,validate, valid}){
+function ModalFormBlock({modal,setModal,formSubmit,formInputChange,form,timeInputChange, valid}){
     return(
         <>
             {modal && 
