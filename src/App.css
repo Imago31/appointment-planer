@@ -81,6 +81,7 @@
   background: green;
   padding: 5px;
   text-align: center;
+  border-radius: 4px;
 }
 
 .openModal{
@@ -163,16 +164,16 @@
 
 .buttonForm{
   height: 40px;
-  border: 2px solid green;
+  border: none;
   border-radius: 4px;
-  color: green;
+  background: green;
+  color: #ffffff;
   transition: .2s;
 }
 
 .buttonForm:hover{
   cursor: pointer;
-  background: green;
-  color: #ffffff;
+  opacity: 0.9;
 }
 
 .closeModal{
@@ -191,10 +192,55 @@
   opacity: 0.9;
 }
 
+.delConfirmModal{
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1900;
+  background: green;
+  color: #ffffff;
+  padding: 20px;
+  width: 300px;
+  border-bottom-left-radius: 4px;
+}
+
+.confirmText{
+  margin-bottom: 10px;
+}
+
+.confirmYes{
+  padding: 5px;
+  width: 60px;
+  background: red;
+  color: #ffffff;
+  border-radius: 4px;
+  border: 0;
+}
+
+.confirmYes:hover{
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.confirmNo{
+  padding: 5px;
+  width: 60px;
+  background: #ffffff;
+  color: green;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  border: 0;
+  margin-right: 12px;
+}
+
+.confirmNo:hover{
+  cursor: pointer;
+  opacity: 0.9;
+}
 .w3-animate-opacity{animation:opac 0.3s}@keyframes opac{from{opacity:0} to{opacity:1}}
 .w3-animate-top{animation:animatetop 0.1s}@keyframes animatetop{from{top:-300px;opacity:0} to{top:0;opacity:1}}
 .w3-animate-left{position:relative;animation:animateleft 0.4s}@keyframes animateleft{from{left:-300px;opacity:0} to{left:0;opacity:1}}
-.w3-animate-right{position:relative;animation:animateright 0.4s}@keyframes animateright{from{right:-300px;opacity:0} to{right:0;opacity:1}}
+.w3-animate-right{animation:animateright 0.1s}@keyframes animateright{from{right:-300px;opacity:0} to{right:0;opacity:1}}
 .w3-animate-bottom{position:relative;animation:animatebottom 0.4s}@keyframes animatebottom{from{bottom:-300px;opacity:0} to{bottom:0;opacity:1}}
 .w3-animate-zoom {animation:animatezoom 0.1s}@keyframes animatezoom{from{transform:scale(0)} to{transform:scale(1)}}
 .w3-animate-input{transition:width 0.4s ease-in-out}.w3-animate-input:focus{width:100%!important}

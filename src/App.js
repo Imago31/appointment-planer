@@ -3,12 +3,15 @@ import './App.css';
 import InputBlock from './components/InputBlock';
 import CardBlock from './components/CardBlock';
 import ModalFormBlock from './components/ModalFormBlock';
+import ModalDellConfirm from './components/ModalDellConfirm';
 
 function App() {
 
   const [termin, setTermin] = useState([]);
   const [filter, setFilter] = useState([]);
   const [modal, setModal] = useState(false);
+  const [dellConfirmModal, setDellConfirmModal] = useState(false);
+  const [removeId, setRemoveId] = useState();
   const [form, setForm] = useState({
     name: '',
     appointment: '',
@@ -85,30 +88,53 @@ function App() {
       }
     }
 
-    function removeTermin(id){
-      setTermin(termin.filter(function(items){
-          return items.id !== id; 
-      }))
-  }
+    function removeConfirm(id){
+      setDellConfirmModal(true);
+      setRemoveId(id);
+    }
 
-  const reverseDate = (date) => {
-    const [year, month, day] = date.split('-');
-    return `${day}-${month}-${year}`; 
-  };
+    function cancelConfirm(i){
+      setDellConfirmModal(false);
+      setRemoveId();
+    }
+
+    function removeTermin(){
+      setTermin(termin.filter(function(items){
+          return items.id !== removeId; 
+      }))
+      setDellConfirmModal(false);
+      setRemoveId();
+    }
+
+    const reverseDate = (date) => {
+      const [year, month, day] = date.split('-');
+      return `${day}-${month}-${year}`; 
+    };
 
   return (
     <div className="main">
       <InputBlock setModal={setModal} filterTermin={filterTermin} />
-      <CardBlock termin={termin} filter={filter} reverseDate={reverseDate} removeTermin={removeTermin} setModal={setModal} />
-      <ModalFormBlock modal={modal} 
+      <CardBlock 
+        termin={termin} 
+        filter={filter} 
+        reverseDate={reverseDate} 
+        setModal={setModal} 
+        removeConfirm={removeConfirm}
+      />
+      <ModalFormBlock 
+        modal={modal} 
         setModal={setModal} 
         formSubmit={formSubmit} 
         formInputChange={formInputChange} 
         form={form} 
-        timeInputChange={timeInputChange} 
-        validate={validate} 
+        timeInputChange={timeInputChange}
         valid={valid}
-        />
+      />
+      <ModalDellConfirm 
+        dellConfirmModal={dellConfirmModal} 
+        removeTermin={removeTermin}
+        cancelConfirm={cancelConfirm}
+      />
     </div>
   )
 }

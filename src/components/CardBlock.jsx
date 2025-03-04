@@ -1,4 +1,4 @@
-function CardBlock({termin,filter,reverseDate,removeTermin,setModal}){
+function CardBlock({termin,filter,reverseDate,setModal,removeConfirm}){
 
     const dateDiff = (targetDate) =>{
         let date = new Date();
@@ -23,7 +23,7 @@ function CardBlock({termin,filter,reverseDate,removeTermin,setModal}){
                             <p className="date" style={{color: dateDiff(item.date) < 3  && 'red'}}>{reverseDate(item.date)}</p>
                             <p className="time">{item.time}</p>
                         </div>
-                        <button onClick={() => removeTermin(item.id)} className="removeTermin">Remove appointment</button>
+                        <button onClick={() => removeConfirm(item.id)} className="removeTermin">Remove appointment</button>
                         </div>
                     )  
         
