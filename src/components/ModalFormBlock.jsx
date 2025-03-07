@@ -1,12 +1,12 @@
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
-function ModalFormBlock({modal,setModal,formSubmit,formInputChange,form,timeInputChange, valid}){
+function ModalFormBlock({modal,formSubmit,formInputChange,form,timeInputChange,valid,editId,modalClose}){
     return(
         <>
             {modal && 
                 <div className="modal w3-animate-top"> 
-                    <button onClick={() =>{setModal(false)}} className="closeModal">&#10005;</button>
+                    <button onClick={modalClose} className="closeModal">&#10005;</button>
                     <form onSubmit={formSubmit} className="form">
                     <input onChange={formInputChange} value={form.name} name="name" className="inputForm" type="text" placeholder="User name" style={{borderLeft: valid.name && '2px solid red'}}/>
                     <input onChange={formInputChange} value={form.appointment} name="appointment" className="inputForm" type="text" placeholder="Appointment name" style={{borderLeft: valid.appointment && '2px solid red'}}/>
@@ -26,7 +26,7 @@ function ModalFormBlock({modal,setModal,formSubmit,formInputChange,form,timeInpu
                             style={{borderLeft: valid.time && '2px solid red'}}
                     />
                     {Object.keys(valid).length !== 0 && <p style={{color: 'red'}}>All fields are required</p>}
-                    <button className="buttonForm" type="submit">Add appointment</button>
+                    <button className="buttonForm" type="submit">{editId ? "Edit appointment" : "Add appointment"}</button>
                     </form>
                 </div>
             }

@@ -1,4 +1,4 @@
-function CardBlock({termin,filter,reverseDate,setModal,removeConfirm}){
+function CardBlock({termin,filter,reverseDate,setModal,removeConfirm,onEdit}){
 
     const dateDiff = (targetDate) =>{
         let date = new Date();
@@ -17,13 +17,16 @@ function CardBlock({termin,filter,reverseDate,setModal,removeConfirm}){
                     filter.map((item) =>{
                     return(
                         <div className="cardBox" key={item.id} >
-                        <div className="card" style={{borderTop: dateDiff(item.date) < 3  && '3px solid red'}}>
-                            <p className="name">{item.name}</p>
-                            <p className="appointment">{item.appointment}</p>
-                            <p className="date" style={{color: dateDiff(item.date) < 3  && 'red'}}>{reverseDate(item.date)}</p>
-                            <p className="time">{item.time}</p>
-                        </div>
-                        <button onClick={() => removeConfirm(item.id)} className="removeTermin">Remove appointment</button>
+                            <div className="card" style={{borderTop: dateDiff(item.date) < 3  && '3px solid red'}}>
+                                <p className="name">{item.name}</p>
+                                <p className="appointment">{item.appointment}</p>
+                                <p className="date" style={{color: dateDiff(item.date) < 3  && 'red'}}>{reverseDate(item.date)}</p>
+                                <p className="time">{item.time}</p>
+                                <div className="cardsButtBlock">
+                                <button onClick={() => onEdit(item.id)} className="editTermin">Edit</button>
+                                <button onClick={() => removeConfirm(item.id)} className="removeTermin">Remove</button>
+                                </div>
+                            </div>
                         </div>
                     )  
         

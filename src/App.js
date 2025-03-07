@@ -12,6 +12,7 @@ function App() {
   const [modal, setModal] = useState(false);
   const [dellConfirmModal, setDellConfirmModal] = useState(false);
   const [removeId, setRemoveId] = useState();
+  const [editId, setEditId] = useState();
   const [form, setForm] = useState({
     name: '',
     appointment: '',
@@ -82,28 +83,50 @@ function App() {
       e.preventDefault();
       const err = validate();
       if(Object.keys(err).length === 0){
-        setTermin([...termin, form]);
-        setModal(false);
-        setForm({name: '',appointment: '',date: '',time: ''})
+        if(!editId){
+          setTermin([...termin, form]);
+          setModal(false);
+          setForm({name: '',appointment: '',date: '',time: ''})
+        }
+        else{
+          setTermin(termin.map(item => (item.id === editId ? { ...item, name: form.name, appointment: form.appointment, date: form.date, time: form.time } : item)));
+          setModal(false);
+          setForm({name: '',appointment: '',date: '',time: ''});
+          setEditId(null);
+        }
       }
     }
 
-    function removeConfirm(id){
+    const removeConfirm =(id) =>{
       setDellConfirmModal(true);
       setRemoveId(id);
     }
 
-    function cancelConfirm(i){
+    const cancelConfirm = () =>{
       setDellConfirmModal(false);
       setRemoveId();
     }
 
-    function removeTermin(){
+    const removeTermin = () =>{
       setTermin(termin.filter(function(items){
           return items.id !== removeId; 
       }))
       setDellConfirmModal(false);
       setRemoveId();
+    }
+
+    const onEdit = (id) =>{
+      termin.map((item) =>{
+         return id === item.id && setForm({name: item.name,appointment: item.appointment ,date: item.date,time: item.time});
+      })
+      setModal(true);
+      setEditId(id);
+    }
+
+    const modalClose = () =>{
+      setModal(false);
+      setEditId();
+      setForm({name: '',appointment: '',date: '',time: ''});
     }
 
     const reverseDate = (date) => {
@@ -120,15 +143,17 @@ function App() {
         reverseDate={reverseDate} 
         setModal={setModal} 
         removeConfirm={removeConfirm}
+        onEdit={onEdit}
       />
       <ModalFormBlock 
         modal={modal} 
-        setModal={setModal} 
         formSubmit={formSubmit} 
         formInputChange={formInputChange} 
         form={form} 
         timeInputChange={timeInputChange}
         valid={valid}
+        editId={editId}
+        modalClose={modalClose}
       />
       <ModalDellConfirm 
         dellConfirmModal={dellConfirmModal} 
